@@ -220,5 +220,5 @@ def set_server_state(server_id):
             if 'server_building' in s_cache[server_id]['metadata']:
                 status = set_resource_status(
                     s_cache[server_id]['updated'],
-                    int(s_cache[server_id]['metadata']['server_building']))
+                    s_cache[server_id]['metadata']['server_building'])
                 s_cache[server_id]['status'] = status or s_cache[server_id]['status']

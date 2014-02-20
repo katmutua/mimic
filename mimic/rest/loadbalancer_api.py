@@ -6,7 +6,7 @@ import json
 from twisted.web.server import Request
 from mimic.canned_responses.loadbalancer import (
     add_load_balancer, del_load_balancer, list_load_balancers,
-    add_node, delete_node, list_nodes)
+    add_node, delete_node, list_nodes, get_load_balancers, get_nodes)
 from mimic.rest.mimicapp import MimicApp
 from mimic.canned_responses.mimic_presets import get_presets
 from random import randrange
@@ -37,6 +37,15 @@ class LoadBalancerApi(object):
         lb_id = randrange(99999)
         content = json.loads(request.content.read())
         response_data = add_load_balancer(tenant_id, content['loadBalancer'], lb_id)
+        request.setResponseCode(response_data[1])
+        return json.dumps(response_data[0])
+
+    @app.route('/v2/<string:tenant_id>/loadbalancers/<int:lb_id>', methods=['GET'])
+    def get_load_balancers(self, request, tenant_id, lb_id):
+        """
+        Returns a list of all load balancers created using mimic with response code 200
+        """
+        response_data = get_load_balancers(lb_id)
         request.setResponseCode(response_data[1])
         return json.dumps(response_data[0])
 
@@ -75,6 +84,16 @@ class LoadBalancerApi(object):
         content = json.loads(request.content.read())
         node_list = content['nodes']
         response_data = add_node(node_list, lb_id)
+        request.setResponseCode(response_data[1])
+        return json.dumps(response_data[0])
+
+    @app.route('/v2/<string:tenant_id>/loadbalancers/<int:lb_id>/nodes/<int:node_id>',
+               methods=['GET'])
+    def get_nodes(self, request, tenant_id, lb_id, node_id):
+        """
+        Returns a 200 response code and list of nodes on the load balancer
+        """
+        response_data = get_nodes(lb_id, node_id)
         request.setResponseCode(response_data[1])
         return json.dumps(response_data[0])
 

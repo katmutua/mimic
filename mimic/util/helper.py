@@ -48,6 +48,6 @@ def set_resource_status(updated_time, time_delta, status='ACTIVE'):
     Given the updated_time and time delta, if the updated_time + time_delta is
     greater than the current time in UTC, returns the given status.
     """
-    if (datetime.strptime(updated_time, fmt) + timedelta(seconds=time_delta)) < \
+    if (datetime.strptime(updated_time, fmt) + timedelta(seconds=int(time_delta))) < \
             datetime.utcnow():
         return status
