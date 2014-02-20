@@ -40,9 +40,9 @@ def load_balancer_example(lb_info, lb_id, status):
                   "connectionLogging": lb_info.get("connectionLogging", {"enabled": False}),
                   "contentCaching": {"enabled": False}}
     if lb_info.get("nodes"):
-        lb_example.update({"nodes": _add_nodes_to_lb(lb_info["nodes"])})
+        lb_example.update({"nodes": _format_nodes_on_lb(lb_info["nodes"])})
     if lb_info.get("metadata"):
-        lb_example.update({"metadata": _add_meta(lb_info["metadata"])})
+        lb_example.update({"metadata": _format_meta(lb_info["metadata"])})
     return lb_example
 
 
@@ -133,8 +133,8 @@ def add_node(node_list, lb_id):
         if lb_cache[lb_id]["status"] != "ACTIVE":
             return invalid_resource("Load Balancer '{0}' has a status of {1} and is considered "
                                     "immutable.".format(lb_id, lb_cache[lb_id]["status"]), 422), 422
+        nodes = _format_nodes_on_lb(node_list)
 
-        nodes = _add_nodes_to_lb(node_list)
         if lb_cache[lb_id].get("nodes"):
             for existing_node in lb_cache[lb_id]["nodes"]:
                 for new_node in node_list:
@@ -210,7 +210,7 @@ def list_nodes(lb_id):
         return not_found_response("loadbalancer"), 404
 
 
-def _add_nodes_to_lb(node_list):
+def _format_nodes_on_lb(node_list):
     """
     create a dict of nodes given the list of nodes
     """
@@ -230,7 +230,7 @@ def _add_nodes_to_lb(node_list):
     return nodes
 
 
-def _add_meta(node_list):
+def _format_meta(node_list):
     """
     creates metadata with 'id' as a key
     """
