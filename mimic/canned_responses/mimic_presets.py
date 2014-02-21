@@ -3,8 +3,8 @@ Defines the preset values in the mimic api.
 """
 
 
-get_presets = {"loadbalancers": {"lb_building": "Keeps the load balancer in building state"
-                                                "for given seconds. Used only on create load balancer",
+get_presets = {"loadbalancers": {"lb_building": "On create load balancer, keeps the load balancer in "
+                                                "building state for given seconds",
                                  "lb_error_state": "Puts the LB in error state, and such an LB can only"
                                                    "be deleted",
                                  "lb_pending_update": "Changes the load balancer to PENDING-UPDATE"
