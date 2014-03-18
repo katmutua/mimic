@@ -28,7 +28,12 @@ def get_token(tenant_id):
                  "endpoints": [{"region": "ORD",
                                 "tenantId": tenant_id,
                                 "publicURL": "http://localhost:8903/v2/{0}".format(tenant_id)}],
-                 "type": "rax:load-balancer"}],
+                 "type": "rax:load-balancer"},
+                {"name": "autoscale",
+                 "endpoints": [{"region": "ORD",
+                                "tenantId": tenant_id,
+                                "publicURL": "http://localhost:8904/v1.0/{0}".format(tenant_id)}],
+                 "type": "rax:autoscale"}],
             "user": {"id": "10002",
                      "name": "autoscaleaus",
                      "roles": [{"id": "1", "description": "Admin", "name": "Identity"}]

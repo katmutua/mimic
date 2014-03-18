@@ -1,7 +1,7 @@
 from twisted.application.strports import service
 from twisted.application.service import MultiService
 from twisted.web.server import Site
-from mimic.rest import auth_api, nova_api, loadbalancer_api, mimic_api
+from mimic.rest import auth_api, nova_api, loadbalancer_api, mimic_api, otter_api
 from twisted.python import usage
 
 
@@ -16,7 +16,8 @@ def makeService(config):
     s = MultiService()
     port_offset = 8900
     for klein_obj in (mimic_api.MimicPresetApi(), auth_api.AuthApi(),
-                      nova_api.NovaApi(), loadbalancer_api.LoadBalancerApi()):
+                      nova_api.NovaApi(), loadbalancer_api.LoadBalancerApi(),
+                      otter_api.OtterApi()):
         site = Site(klein_obj.app.resource())
         api_service = service(str(port_offset), site)
         api_service.setServiceParent(s)
