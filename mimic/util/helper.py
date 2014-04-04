@@ -1,3 +1,7 @@
+
+"""
+Helper methods
+"""
 from datetime import datetime, timedelta
 
 

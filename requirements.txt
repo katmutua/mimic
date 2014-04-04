@@ -3,3 +3,7 @@ twisted
 jsonschema==2.0
 treq==0.2.0
 unittest2==0.5.1
+pep8==1.5.3
+pep257==0.2.0
+pyflakes==0.8.0
+plumbum==0.9.0
